@@ -163,7 +163,7 @@ curl -XPUT 'localhost:9200/_river/jiangsu/_meta' -d '{
 }'
 \end{verbatim}
 \subsection{ES性能优化}
-一个Elasticsearch节点会有多个线程池，但重要的是下面四个：
+\par 一个Elasticsearch节点会有多个线程池，但重要的是下面四个：
 \begin{itemize}
 \item 索引（index）：主要是索引数据和删除数据操作（默认是cached类型）;
 \item 搜索（search）：主要是获取，统计和搜索操作（默认是cached类型）;
