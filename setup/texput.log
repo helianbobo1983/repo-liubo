@@ -1,0 +1,9 @@
+This is TeX, Version 3.1415926 (TeX Live 2013) (format=tex 2013.9.27)  21 OCT 2013 10:48
+**\input weka.tex
+
+! Emergency stop.
+<*> \input weka.tex
+                   
+*** (job aborted, file error in nonstop mode)
+
+No pages of output.

@@ -1,0 +1,109 @@
+\addtolength{\headsep}{-0.1cm}      %页眉位置
+\addtolength{\footskip}{0.4cm}         %页脚位置
+\allowdisplaybreaks[4]                   %可以设置成为自动调整模式
+\makeatletter
+\newcommand{\rmnum}[1]{\romannumeral #1}
+\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\makeatother
+%% 下面这组命令使浮动对象的缺省值稍微宽松一点，从而防止幅度
+% 对象占据过多的文本页面，也可以防止在很大空白的浮动页上放置很小的图形。
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.65}
+\renewcommand{\floatpagefraction}{0.60}
+\newcommand{\song}{\CJKfamily{song}}    % 宋体   (Windows自带simsun.ttf)
+\newcommand{\fs}{\CJKfamily{fs}}        % 仿宋体 (Windows自带simfs.ttf)
+\newcommand{\kai}{\CJKfamily{kai}}      % 楷体   (Windows自带simkai.ttf)
+\newcommand{\hei}{\CJKfamily{hei}}      % 黑体   (Windows自带simhei.ttf)
+\newcommand{\li}{\CJKfamily{li}}        % 隶书   (Windows自带simli.ttf)
+
+\newcommand{\yihao}{\fontsize{26pt}{36pt}\selectfont}    % 一号, 1.4倍行距
+\newcommand{\erhao}{\fontsize{22pt}{28pt}\selectfont}    % 二号, 1.25倍行距
+\newcommand{\xiaoer}{\fontsize{18pt}{18pt}\selectfont}    % 小二, 单倍行距
+\newcommand{\sanhao}{\fontsize{16pt}{24pt}\selectfont}    % 三号, 1.5倍行距
+\newcommand{\xiaosan}{\fontsize{15pt}{22pt}\selectfont}    % 小三, 1.5倍行距
+\newcommand{\sihao}{\fontsize{14pt}{21pt}\selectfont}    % 四号, 1.5倍行距
+\newcommand{\banxiaosi}{\fontsize{13pt}{19.5pt}\selectfont}    % 半小四, 1.5倍行距
+\newcommand{\xiaosi}{\fontsize{12pt}{18pt}\selectfont}    % 小四, 1.5倍行距
+\newcommand{\dawuhao}{\fontsize{11pt}{11pt}\selectfont}    % 大五号, 单倍行距
+\newcommand{\wuhao}{\fontsize{10.5pt}{10.5pt}\selectfont}    % 五号, 单倍行距
+
+
+
+\newlength \CJKtwospaces
+\renewcommand\figurename{图}
+\renewcommand\tablename{表}
+
+\def\CJKindent{
+  \settowidth\CJKtwospaces{\CJKchar{"0A1}{"0A1}\CJKchar{"0A1}{"0A1}}%
+  \parindent\CJKtwospaces
+}
+
+
+\CJKtilde  
+\CJKindent
+
+
+% 定义段落章节的标题和目录项的格式
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{3}
+
+
+\titleformat{\section}[hang]{\ttfamily \bf \sanhao } {\mbox{\boldmath $\S$}\thesection}{0.5em}{}{}
+\titlespacing{\section}{0pt}{1.5ex plus 0.5ex minus 0.5ex}{1.5ex plus .5ex minus .5ex}
+
+\titleformat{\subsection}[hang]{\ttfamily \bf \xiaosan}{\mbox{\boldmath $\S$}\thesubsection}{0.5em}{}{}
+\titlespacing{\subsection}{0pt}{1ex plus .2ex minus .2ex}{1ex plus .2ex minus .2ex}
+
+\titleformat{\subsubsection}[hang]{\ttfamily \bf \sihao}{\mbox{\boldmath$\S$}\thesubsubsection }{0.5em}{}{}
+\titlespacing{\subsubsection}{0pt}{0.8ex plus .2ex minus .2ex}{0.8ex plus .2ex minus .2ex}
+
+\titleformat{\paragraph}[hang]{\ttfamily \bf \banxiaosi}{\mbox{\boldmath$\S$}\theparagraph}{0.5em}{}{}
+\titlespacing{\paragraph}{0pt}{0.5ex plus .3ex minus .3ex}{0.5ex plus .3ex minus .3ex}
+
+
+\titleformat{\subparagraph}[hang]{\ttfamily \bf \xiaosi }{\thesubparagraph}{0.5em}{}{}
+\titlespacing{\subparagraph}{0pt}{0.5ex plus .3ex minus .3ex}{0.5ex plus .3ex minus .3ex}
+
+
+
+
+\makeatletter
+\renewcommand\@biblabel[1]{\rmfamily #1}%第二行去除参考文献里数字两边的方框
+\renewcommand{\@cite}[1] {\raisebox{0.3em}{\scriptsize [#1]} }%将引用用"[]"包围,并将其置于上标位置.
+\makeatother
+
+% 调整表格和插图的标号，不是全局显示，其计数器相对于当前节
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\renewcommand{\thefigure}{\thesection-\arabic{figure}}
+\renewcommand{\thetable}{\thesection-\arabic{table}}
+% 调整表格和插图的标号，不是全局显示，其计数器相对于当前节,如图1-1，表2-1形状
+\setlength{\parskip}{3pt plus1pt minus1pt} %段落之间的竖直距离
+
+% 定制浮动图形和表格标题样式
+\renewcommand{\captionfont}{\CJKfamily{song}\rmfamily \small}
+\renewcommand{\captionlabelfont}{\CJKfamily{song}\rmfamily \small}
+\renewcommand{\captionlabeldelim}{\hspace{0.5em}}%图表标签与图表标题的间距设为0.5em
+
+
+% 自定义一个空命令，用于注释掉文本中不需要的部分。
+\newcommand{\comment}[1]{}
+% This is the flag for longer version
+\newcommand{\longer}[2]{#1}
+\newcommand{\ds}{\displaystyle}
+\def\gs{1.0}% define graph scale
+
+
+\renewcommand{\thefootnote}{\arabic{footnote}}%将脚注标记恢复成阿拉伯数字形式
+\def\useyap{true}% 是否使用Yap的开关
+\sloppy%解决中英文混排的断行问题，会加入间距，但不会影响断行
+\renewcommand{\descriptionlabel}[1]{\hspace*{\labelsep}\scalebox{1.015}{\bf #1}}
+
+
+
+\renewcommand{\contentsname}{}
+\renewcommand\listfigurename{}
+\renewcommand\listtablename{}
+
+

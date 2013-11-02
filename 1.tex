@@ -1,0 +1,53 @@
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "weka"
+%%% End: 
+\section{OLAP}
+\subsection{OLAP相关概念}
+Mondrian是一个基于Java语言的开源OLAP引擎，它通过MDX语句执行查询，从关系型数据库RDBMS中读取数据，以多维度的形式展示查询结果。
+\par Mondrian通过Schema来定义一个多维数据库，它是一个逻辑概念上的模型，其中包含Cube（立方体）、Dimension（维度）、Hierarchy（层次）、Level（级别）、Measure（度量），这些被映射到数据库物理模型。Mondrian中Schema是以XML文件的形式定义的。
+\begin{itemize}
+\item Cube（立方体）是一系列Dimension和Measure的集合区域，它们共用一个事实表。
+\item Dimension（维度）是一个Hierarchy的集合，维度一般有其相对应的维度表，它由Hierarchy（层次）组成，而Hierarchy（层次）又是由组成Level（级别）的。
+\item Hierarchy（层次）是指定维度的层级关系的，如果没有指定，默认Hierarchy里面装的是来自立方体中的真实表。
+\item Level（级别）是Hierarchy的组成部分，使用它可以构成一个结构树，Level的先后顺序决定了Level在结构树上的位置，最顶层的 Level 位于树的第一级，依次类推。
+\item Measure（度量）是我们要进行度量计算的数值，支持的操作有sum、count、avg、distinct-count、max、min等。
+\end{itemize}
+\par 概括总结一下：在多维分析中，关注的内容通常被称为度量(Measure)，而把限制条件称为维度(Dimension)。多维分析就是对同时满足多种限制条件的所有度量值做汇总统计。包含度量值的表被称为事实表(Fact Table)，描述维度具体信息的表被称为维表(Dimension Table)，同时有一点需要注意：并不是所有的维度都要有维表，对于取值简单的维度，可以直接使用事实表中的一列作为维度展示。
+\par 下面是Mondrian中一个简单的Schema文件,其中包含一个名为“Sales”的Cube，立方体中有两个维度：“Gender”和“Time”，两个度量值：“Unit Sales”和“Store Sales”。
+\begin{verbatim}
+<Schema>
+<Cube name="Sales">
+<Table name="sales_fact_1997"/>
+<Dimension name="Gender" foreignKey="customer_id">
+<Hierarchy hasAll="true" allMemberName="All Genders" primaryKey="customer_id">
+<Table name="customer"/>
+<Level name="Gender" column="gender" uniqueMembers="true"/>
+</Hierarchy>
+</Dimension>
+<Dimension name="Time" foreignKey="time_id">
+<Hierarchy hasAll="false" primaryKey="time_id">
+<Table name="time_by_day"/>
+<Level name="Year" column="the_year" type="Numeric" uniqueMembers="true"/>
+<Level name="Quarter" column="quarter" uniqueMembers="false"/>
+<Level name="Month" column="month_of_year" type="Numeric" uniqueMembers="false"/>
+</Hierarchy>
+</Dimension>
+<Measure name="Unit Sales" column="unit_sales" aggregator="sum" formatString="#,###"/>
+<Measure name="Store Sales" column="store_sales" aggregator="sum" formatString="#,###.##"/>
+<Measure name="Store Cost" column="store_cost" aggregator="sum" formatString="#,###.00"/>
+<CalculatedMember name="Profit" dimension="Measures" formula="[Measures].[Store Sales] - [Measures].[Store Cost]">
+<CalculatedMemberProperty name="FORMAT_STRING" value="$#,##0.00"/>
+</CalculatedMember>
+</Cube>
+</Schema>
+\end{verbatim}
+\subsection{数据预处理}
+\begin{itemize}
+\item 数据清理用来清除数据中的噪声，纠正不一致。
+\item 数据集成将数据由多个数据源合并成一个一致的数据存储，如数据仓库。
+\item 数据归约可以通过聚集，删除冗余特征或者聚类方法来降低数据的规模，便于分析。
+\item 数据变换可以用来把数据压缩到较小的空间，如0.0到1.0，可以提高涉及距离度量的挖掘算法的准确率和效率。
+\end{itemize}
+\par 不正确，不完整和不一致的数据是商场中数据的普遍特点，如许多数据库表元组在某些属性上根本没有值，有些属性没有被记录，对同一款商品，不同商场的命名不一样。
